@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "numeric": "c",
+    "array": "c",
+    "string": "c"
+  }
+}

@@ -22,13 +22,13 @@ void addElemenToIslandIDX(Matrix2D *M, int x, int y) {
     M->data[islandIDXLength][1] = y;
 }
 
-void findAllRelated(Matrix2D M, Matrix2D *island) {
+Matrix2D* findAllRelated(Matrix2D* M, Matrix2D *island) {
     int done;
 
     for (int i = 0;i < islandIDXLength;i++) {
         done = 0;
 
-        if ((M.data[island->data[i][0]-1][island->data[i][1]] == 1) && isElementInIslandIDXExist(*island, island->data[i][0]-1,island->data[i][1]) == 0) {
+        if ((M->data[island->data[i][0]-1][island->data[i][1]] == 1) && isElementInIslandIDXExist(*island, island->data[i][0]-1,island->data[i][1]) == 0) {
             addElemenToIslandIDX(island, island->data[i][0]-1, island->data[i][1]);
             add();
         }
@@ -36,7 +36,7 @@ void findAllRelated(Matrix2D M, Matrix2D *island) {
             done += 1;
         }
 
-        if ((M.data[island->data[i][0]][island->data[i][1]-1] == 1) && isElementInIslandIDXExist(*island, island->data[i][0],island->data[i][1]-1) == 0) {
+        if ((M->data[island->data[i][0]][island->data[i][1]-1] == 1) && isElementInIslandIDXExist(*island, island->data[i][0],island->data[i][1]-1) == 0) {
             addElemenToIslandIDX(island, island->data[i][0], island->data[i][1]-1);
             add();
         }
@@ -44,7 +44,7 @@ void findAllRelated(Matrix2D M, Matrix2D *island) {
             done += 1;
         }
 
-        if ((M.data[island->data[i][0]][island->data[i][1]+1] == 1) && isElementInIslandIDXExist(*island, island->data[i][0],island->data[i][1]+1) == 0) {
+        if ((M->data[island->data[i][0]][island->data[i][1]+1] == 1) && isElementInIslandIDXExist(*island, island->data[i][0],island->data[i][1]+1) == 0) {
             addElemenToIslandIDX(island, island->data[i][0], island->data[i][1]+1);
             add();
         }
@@ -52,7 +52,7 @@ void findAllRelated(Matrix2D M, Matrix2D *island) {
             done += 1;
         }
 
-        if ((M.data[island->data[i][0]+1][island->data[i][1]] == 1) && isElementInIslandIDXExist(*island, island->data[i][0]+1,island->data[i][1]) == 0) {
+        if ((M->data[island->data[i][0]+1][island->data[i][1]] == 1) && isElementInIslandIDXExist(*island, island->data[i][0]+1,island->data[i][1]) == 0) {
             addElemenToIslandIDX(island, island->data[i][0]+1, island->data[i][1]);
             add();
         }
@@ -62,7 +62,10 @@ void findAllRelated(Matrix2D M, Matrix2D *island) {
     }
 
     if (done < 4) {
-        findAllRelated(M, island);
+        return findAllRelated(M, island);
+    }
+    else {  
+        return island;
     }
 }
 
@@ -139,7 +142,7 @@ int main() {
             if ((M.data[i][j] == 1) && (isElementInIslandIDXExist(islandIDX, i, j) == 0) ) {
                 addElemenToIslandIDX(&islandIDX, i, j); 
                 add();
-                findAllRelated(M, &islandIDX);
+                findAllRelated(&M, &islandIDX);
                 countIsland += 1;
             }
             
